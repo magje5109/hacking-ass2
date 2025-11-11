@@ -10,7 +10,7 @@
 import sys
 import csv
 from collections import Counter, defaultdict
-from datetime import datetime
+from datetime import datetime, UTC
 
 try:
     from scapy.all import rdpcap, TCP, UDP, IP, IPv6, DNS, DNSQR, DNSRR, Raw, ICMP
@@ -130,7 +130,7 @@ def main():
             # Only queries/responses with a question
             qname = None
             qtype = None
-            if dns.qd and isinstance(dns.qd, DNSQR):
+            if dns.qd and isinstance(dns.qd[0], DNSQR):
                 qname = dns.qd.qname.decode(errors="ignore").rstrip(".")
                 qtype = dns.qd.qtype
 
@@ -141,7 +141,7 @@ def main():
                 an = dns.an
                 count = 0
                 while an and count < dns.ancount:
-                    if isinstance(an, DNSRR):
+                    if isinstance(an[0], DNSRR):
                         rrname = an.rrname.decode(errors="ignore").rstrip(".") if isinstance(an.rrname, bytes) else str(an.rrname)
                         rdata = an.rdata
                         if isinstance(rdata, bytes):
@@ -156,7 +156,7 @@ def main():
                         break
 
             ts = getattr(pkt, "time", None)
-            tstr = datetime.utcfromtimestamp(ts).isoformat() + "Z" if ts else ""
+            tstr = str(datetime.fromtimestamp(int(ts), UTC)) + "Z" if ts else ""
             dns_rows.append([tstr, src or "", dst or "", qname or "", qtype or "", rcode, "; ".join(answers)])
 
         # HTTP URLs (plaintext only)
@@ -169,7 +169,7 @@ def main():
                     if parsed:
                         method, host, path, ua = parsed
                         ts = getattr(pkt, "time", None)
-                        tstr = datetime.utcfromtimestamp(ts).isoformat() + "Z" if ts else ""
+                        tstr = str(datetime.fromtimestamp(int(ts), UTC)) + "Z" if ts else ""
                         url = f"http://{host}{path}"
                         url_rows.append([tstr, src or "", dst or "", method, url, ua or ""])
         except Exception:

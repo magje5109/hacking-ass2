@@ -1,0 +1,6 @@
+protocol,count
+DNS,108
+OTHER,74
+HTTP,24
+SSH,4
+ICMP,2
