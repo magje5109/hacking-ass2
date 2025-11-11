@@ -49,7 +49,7 @@ class LoggingHandler(BaseHTTPRequestHandler):
         ua = self.headers.get('User-Agent', '')
         self.log_line(f'"{self.command} {self.path}" Host="{host}" UA="{ua}"')
 
-        body = self.server_banner.format(time=datetime.utcnow().isoformat() + "Z").encode("utf-8")
+        body = self.server_banner.format(time=datetime.now(timezone.utc).isoformat() + "Z").encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
