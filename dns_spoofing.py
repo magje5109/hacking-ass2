@@ -2,6 +2,7 @@
 
 import argparse
 import sys
+import os
 import signal
 from scapy.all import *
 import netfilterqueue
