@@ -1,0 +1,3 @@
+2025-11-11T12:27:11.175837+00:00Z 192.168.100.185 "GET /" Host="gateway.test" UA="Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
+2025-11-11T12:27:11.255031+00:00Z 192.168.100.185 "GET /favicon.ico" Host="gateway.test" UA="Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
+2025-11-11T12:29:22.773380+00:00Z 192.168.100.185 "GET /" Host="gateway.test" UA="Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
