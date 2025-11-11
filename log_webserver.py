@@ -8,7 +8,7 @@
 
 import argparse
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from datetime import datetime
+from datetime import datetime, timezone
 
 class LoggingHandler(BaseHTTPRequestHandler):
     server_banner = (
@@ -22,7 +22,7 @@ class LoggingHandler(BaseHTTPRequestHandler):
     )
 
     def log_line(self, msg):
-        line = f"{datetime.utcnow().isoformat()}Z {self.client_address[0]} {msg}\n"
+        line = f"{datetime.now(timezone.utc).isoformat()}Z {self.client_address[0]} {msg}\n"
         try:
             self.server.log_fp.write(line)
             self.server.log_fp.flush()
